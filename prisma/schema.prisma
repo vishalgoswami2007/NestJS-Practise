@@ -12,9 +12,10 @@ datasource db {
   provider = "postgresql"
 }
 
-model trader {
-  id  String  @id @default(uuid())
-  username String @unique
-  email  String  @unique
-  createAt DateTime @default(now())
+model user {
+ id Int @id @default(autoincrement())
+ email String @unique 
+ password String 
+ name String 
+ createdAt DateTime @default(now())
 }
