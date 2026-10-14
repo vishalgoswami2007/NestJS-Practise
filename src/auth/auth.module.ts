@@ -1,10 +1,18 @@
-import {Module} from '@nestjs/common';
-import {OrderController} from './orders.controller.js';
-import {OrderService} from './orders.service.js';
+import { Module } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { PrismaModule } from '../prisma/prisma.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-    controllers: [OrderController],
-    providers: [OrderService],
+  imports: [
+    PrismaModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET || 'SECRET_WARS_KEY',
+      signOptions: { expiresIn: '1d' },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService],
 })
-
-export class OrderModule {}
+export class AuthModule {}
